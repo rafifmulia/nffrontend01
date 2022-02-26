@@ -1,0 +1,19 @@
+{
+  "name": "nfnode01",
+  "version": "1.0.0",
+  "description": "campus frontend semester4 2022",
+  "main": "app.js",
+  "author": "rafifmulia",
+  "scripts": {
+    "test": "jest",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
+}

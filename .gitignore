@@ -1,0 +1,8 @@
+node_modules
+npm-debug.
+.env
+.dockerignore
+docker-compose.*
+Dockerfile
+Dockerfile.*
+app.*

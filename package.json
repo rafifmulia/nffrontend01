@@ -6,14 +6,18 @@
   "author": "rafifmulia",
   "scripts": {
     "test": "jest",
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "babel-node src/app.js",
+    "dev": "nodemon --exec babel-node src/app.js"
   },
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3"
   },
   "devDependencies": {
-    "jest": "^27.5.1"
+    "@babel/core": "^7.17.5",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
+    "jest": "^27.5.1",
+    "nodemon": "^2.0.15"
   }
 }

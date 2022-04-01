@@ -1,74 +1,31 @@
+import { nanoid } from 'nanoid';
+import Movie from '../Movie/Movie';
 import styles from './Movies.module.css';
-
-function Movie(props) {
-  return (
-    <div className={styles.movie}>
-      <img
-        className={styles.movie__image}
-        src={props.thumb}
-        alt=""
-      />
-      <h3 className={styles.movie__title}>{props.title}</h3>
-      <p className={styles.movie__date}>{props.release_date}</p>
-    </div>
-  )
-}
+import useMoviesHook from '../../utils/hooks/movies';
+import data from '../../utils/constants/data';
 
 function Movies() {
-  const movies = [
-    {
-      thumb: "https://picsum.photos/600/400",
-      title: "MoveMove 1",
-      release_date: "19 Mar 2022",
-    },
-    {
-      thumb: "https://picsum.photos/600/400",
-      title: "MoveMove 2",
-      release_date: "19 Mar 2022",
-    },
-    {
-      thumb: "https://picsum.photos/600/400",
-      title: "MoveMove 3",
-      release_date: "19 Mar 2022",
-    },
-    {
-      thumb: "https://picsum.photos/600/400",
-      title: "MoveMove 4",
-      release_date: "19 Mar 2022",
-    },
-    {
-      thumb: "https://picsum.photos/600/400",
-      title: "MoveMove 1",
-      release_date: "19 Mar 2022",
-    },
-    {
-      thumb: "https://picsum.photos/600/400",
-      title: "MoveMove 2",
-      release_date: "19 Mar 2022",
-    },
-    {
-      thumb: "https://picsum.photos/600/400",
-      title: "MoveMove 3",
-      release_date: "19 Mar 2022",
-    },
-    {
-      thumb: "https://picsum.photos/600/400",
-      title: "MoveMove 4",
-      release_date: "19 Mar 2022",
-    },
-  ];
+  const [ movies, setMovies ] = useMoviesHook(data);
 
-  const listMovies = movies.map((movie) =>
-    <Movie thumb={movie.thumb} title={movie.title} release_date={movie.release_date} />
-  )
+  function handleClick() {
+    const movie = {
+      id: nanoid(),
+      title: "New Movie",
+      type: "movie",
+      year: "2023",
+      poster: "https://picsum.photos/600/400",
+    };
+    setMovies([...movies, movie]);
+  }
 
   return (
     <div className={styles.container}>
       <section className={styles.movies}>
         <h2 className={styles.movies__title}>Lates Movies</h2>
         <div className={styles.movie__container}>
-          {listMovies}
+          {movies.map((movie) => <Movie key={movie.id} movie={movie} />)}
         </div>
+        <button onClick={handleClick}>Add Movie</button>
       </section>
     </div>
   )

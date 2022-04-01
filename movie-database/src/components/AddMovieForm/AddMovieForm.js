@@ -1,6 +1,21 @@
+import { nanoid } from 'nanoid';
 import styles from './AddMovieForm.module.css';
+import useMoviesHook from '../../utils/hooks/movies';
+import data from '../../utils/constants/data';
 
 function AddMovieForm() {
+  const [ movies, setMovies ] = useMoviesHook(data);
+  function handleClick() {
+    const movie = {
+      id: nanoid(),
+      title: "New Movie",
+      type: "movie",
+      year: "2023",
+      poster: "https://picsum.photos/600/400",
+    };
+    setMovies([...movies, movie]);
+  }
+
   return (
     <div className={styles.container}>
       <section className={styles.addMovie}>
@@ -20,10 +35,10 @@ function AddMovieForm() {
             </div>
             <div className={styles.addMovie__forms__group}>
               <label className={styles.addMovie__forms__label}>Date</label>
-              <input type="date" className={styles.addMovie__forms__input} />
+              <input type="number" className={styles.addMovie__forms__input} min="1900" max="2099" defaultValue="2022" />
             </div>
             <div className={styles.addMovie__forms__group}>
-              <button className={styles.addMovie__forms__button}>Submit</button>
+              <button className={styles.addMovie__forms__button} onClick={handleClick}>Submit</button>
             </div>
           </form>
         </div>

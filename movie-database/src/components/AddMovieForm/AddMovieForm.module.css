@@ -50,6 +50,10 @@
   outline: 1px solid #4361EE;
 }
 
+.addMovie__forms__select {
+  background-color: #fff;
+}
+
 .addMovie__forms__button {
   display: block;
   width: 100%;

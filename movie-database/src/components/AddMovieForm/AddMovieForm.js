@@ -26,46 +26,54 @@ function AddMovieForm(props) {
     },
   });
 
-  function hdlChangeTitle(ev) {
-    setInput({ ...input, title: { ...input.title, value: ev.target.value } });
+  const { title, date, genre, imgUrl } = input;
+
+  function hdlChange(ev) {
+    const { name, value } = ev.target;
+    setInput({ ...input, [name]: { ...input[name], value } });
   }
 
-  function hdlChangeDate(ev) {
-    setInput({ ...input, date: { ...input.date, value: ev.target.value } });
-  }
-
-  function hdlChangeGenre(ev) {
-    setInput({ ...input, genre: { ...input.genre, value: ev.target.value } });
-  }
-
-  function hdlChangeImgUrl(ev) {
-    const value = ev.target.value;
-    if (value.trim().length < 1) {
-      return setInput({ ...input, imgUrl: { ...input.imgUrl, value: defaultImg } });
-    }
-    setInput({ ...input, imgUrl: { ...input.imgUrl, value: value } });
-  }
-
-  function handleSubmit(ev) {
-    ev.preventDefault();
-
+  function validate() {
     const updtInput = {
       ...input,
     };
 
-    if (input.title.value.trim().length < 1) return setInput({ ...input, title: { ...input.title, isError: true } });;
+    if (input.title.value.trim().length < 1) {
+      // setInput({ ...input, title: { ...input.title, isError: true } });
+      updtInput.title.isError = true;
+      setInput(updtInput);
+      return false;
+    }
     updtInput.title.isError = false;
     setInput(updtInput);
-    if (input.date.value.trim().length < 1) return setInput({ ...input, date: { ...input.date, isError: true } });;
+    if (input.date.value.trim().length < 1) {
+      // setInput({ ...input, date: { ...input.date, isError: true } });
+      updtInput.date.isError = true;
+      setInput(updtInput);
+      return false;
+    }
     updtInput.date.isError = false;
     setInput(updtInput);
-    if (input.genre.value.trim().length < 1) return setInput({ ...input, genre: { ...input.genre, isError: true } });;
+    if (input.genre.value.trim().length < 1) {
+      // setInput({ ...input, genre: { ...input.genre, isError: true } });
+      updtInput.genre.isError = true;
+      setInput(updtInput);
+      return false;
+    }
     updtInput.genre.isError = false;
     setInput(updtInput);
-    if (input.imgUrl.value.trim().length < 1 || input.imgUrl.value.indexOf('no-image-available.png') > -1) return setInput({ ...input, imgUrl: { ...input.imgUrl, isError: true } });;
+    if (input.imgUrl.value.trim().length < 1 || input.imgUrl.value.indexOf('no-image-available.png') > -1) {
+      // setInput({ ...input, imgUrl: { ...input.imgUrl, isError: true } });
+      updtInput.imgUrl.isError = true;
+      setInput(updtInput);
+      return false;
+    }
     updtInput.imgUrl.isError = false;
     setInput(updtInput);
+    return true;
+  }
 
+  function addMovie() {
     const movie = {
       id: nanoid(),
       title: input.title.value,
@@ -75,6 +83,24 @@ function AddMovieForm(props) {
       poster: input.imgUrl.value,
     };
     setMovies([...movies, movie]);
+    return true;
+  }
+
+  function resetAddMovieForm() {
+    const updtInput = {
+      ...input,
+    };
+    updtInput.title.value = "";
+    updtInput.date.value = "";
+    updtInput.genre.value = "general";
+    updtInput.imgUrl.value = "";
+    setInput(updtInput);
+    return true;
+  }
+
+  function handleSubmit(ev) {
+    ev.preventDefault();
+    validate() && addMovie() && resetAddMovieForm();
   }
 
   return (
@@ -92,17 +118,17 @@ function AddMovieForm(props) {
           <form className={styles.addMovie__forms} onSubmit={handleSubmit}>
             <div className={styles.addMovie__forms__group}>
               <label className={styles.addMovie__forms__label}>Title</label>
-              <input type="text" className={styles.addMovie__forms__input} value={input.title.value} onChange={hdlChangeTitle} />
+              <input type="text" name="title" className={styles.addMovie__forms__input} value={title.value} onChange={hdlChange} />
               {input.title.isError && <Alert>Title Wajib Diisi</Alert>}
             </div>
             <div className={styles.addMovie__forms__group}>
               <label className={styles.addMovie__forms__label}>Date</label>
-              <input type="number" className={styles.addMovie__forms__input} min="1900" max="2039" value={input.date.value} onChange={hdlChangeDate} />
+              <input type="number" name="date" className={styles.addMovie__forms__input} min="1900" max="2039" value={date.value} onChange={hdlChange} />
               {input.date.isError && <Alert>Date Wajib Diisi</Alert>}
             </div>
             <div className={styles.addMovie__forms__group}>
               <label className={styles.addMovie__forms__label}>Genre</label>
-              <select className={`${styles.addMovie__forms__input} ${styles.addMovie__forms__select}`} value={input.genre.value} onChange={hdlChangeGenre}>
+              <select name="genre" className={`${styles.addMovie__forms__input} ${styles.addMovie__forms__select}`} value={genre.value} onChange={hdlChange}>
                 {
                   genres.map((genre) => {
                     return <option key={nanoid()} value={genre.id}>{genre.text}</option>;
@@ -113,7 +139,7 @@ function AddMovieForm(props) {
             </div>
             <div className={styles.addMovie__forms__group}>
               <label className={styles.addMovie__forms__label}>Preview Image (URL)</label>
-              <input type="text" className={styles.addMovie__forms__input} value={(input.imgUrl.value.indexOf('no-image-available.png') > -1) ? "" : input.imgUrl.value} onChange={hdlChangeImgUrl} />
+              <input type="text" name="imgUrl" className={styles.addMovie__forms__input} value={(imgUrl.value.indexOf('no-image-available.png') > -1) ? "" : input.imgUrl.value} onChange={hdlChange} />
               {input.imgUrl.isError && <Alert>Kok Gaada Preview Imagenya ?</Alert>}
             </div>
             <div className={styles.addMovie__forms__group}>

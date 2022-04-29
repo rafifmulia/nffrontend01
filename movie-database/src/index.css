@@ -22,6 +22,11 @@ code {
     monospace;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .text-start {
   text-align: start;
 }

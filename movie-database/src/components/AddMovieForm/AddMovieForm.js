@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { nanoid } from 'nanoid';
 import Alert from "../Alert/Alert";
 import styles from './AddMovieForm.module.css';
@@ -25,12 +25,44 @@ function AddMovieForm(props) {
       isError: false,
     },
   });
+  const [count, setCount] = useState(0);
 
   const { title, date, genre, imgUrl } = input;
 
+  /**
+   * render(state) dulu baru useEffect(mounting / updating)
+   * dilakukan secara sequence tidak pararel
+   * 1. diluar useEffect adalah proses render
+   * 2. dalam useEffect adalah proses mounting/updating
+   */
+
+  // console.log('render 1');
+
+  function effectCount() {
+    /**
+     * jika update state dilakukan saat proses mounting / updating (maksudnya dialam useEffect)
+     * maka akan menghasilkan infinite loop jika tidak menerapkan second parameter (membatasi state yang terkena effect)
+     * meskipun sudah menerapkan second parameter, proses render akan menjadi 2x, jika update state didalam effect yang terkena effect
+     * second parameter bisa array kosong, artinya tidak ada effect yang dijalankan pada update state manapun
+     */
+    // console.log('effCount');
+    document.title = `count - ${count}`;
+    // case jika update state di yang tidak terkena effect, proses render menjadi 2x
+    // setInput({ ...input, [title]: { ...input[title], value: "side effect" } });
+    // case jika update state pada state yang terkena effect, infinite loop
+    // setCount(count + 1);
+  }
+  // run every init/ mounting (run when reload) and updating (when state get change)
+  useEffect(effectCount, [count]);
+
+  // console.log('render 2');
+
   function hdlChange(ev) {
     const { name, value } = ev.target;
+    // tidak terkena effect
     setInput({ ...input, [name]: { ...input[name], value } });
+    // terkena effect
+    setCount(count + 1);
   }
 
   function validate() {

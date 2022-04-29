@@ -72,6 +72,8 @@
   }
 
   .hero__right {
-    flex-basis: 55%;
+    flex-basis: 60%;
+    display: flex;
+    justify-content: flex-end;
   }
 }

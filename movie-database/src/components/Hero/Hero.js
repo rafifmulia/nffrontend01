@@ -1,36 +1,40 @@
 import { useState, useEffect } from 'react';
-import styles from './Hero.module.css';
+import StyledHero from './Hero.styled';
+import Button from '../ui/Button';
+import Image from '../ui/Image';
 
 function Hero() {
   const [movie, setMovie] = useState("");
 
   // effect with initial data (mounting only)
-  async function fetchMovie() {
+  function fetchMovie() {
     const url = "https://www.omdbapi.com/?apikey=fcf50ae6&i=tt2975590";
-    const response = await fetch(url);
-    const data = await response.json();
-    setMovie(data);
+    (async function() {
+      const response = await fetch(url);
+      const data = await response.json();
+      setMovie(data);
+    })();
   }
   useEffect(fetchMovie, []);
 
   return (
-    <div className={styles.container}>
-      <section className={styles.hero}>
-        <div className={styles.hero__left}>
-          <h2 className={styles.hero__title}>{movie.Title}</h2>
-          <h3 className={styles.hero__genre}>Genre: {movie.Genre}</h3>
-          <p className={styles.hero__description}>{movie.Plot}</p>
-          <button className={styles.hero__button}>Watch</button>
+    <StyledHero>
+      <section>
+        <div>
+          <h2>{movie.Title}</h2>
+          <h3>Genre: {movie.Genre}</h3>
+          <p>{movie.Plot}</p>
+          {/* <button>Watch</button> */}
+          <Button variant="primary" full>Watch</Button>
         </div>
-        <div className={styles.hero__right}>
-          <img
-            className={styles.hero__image}
+        <div>
+          <Image
             src={movie.Poster}
             alt={movie.Title}
           />
         </div>
       </section>
-    </div>
+    </StyledHero>
   )
 }
 

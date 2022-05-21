@@ -3,6 +3,10 @@ import { nanoid } from 'nanoid';
 import Alert from "../Alert/Alert";
 import styles from './AddMovieForm.module.css';
 import genres from '../../utils/constants/genres';
+import Button from '../ui/Button';
+import Label from '../ui/Label';
+import Input from '../ui/Input';
+import Image from '../ui/Image';
 
 function AddMovieForm(props) {
   const { movies, setMovies } = props;
@@ -139,7 +143,7 @@ function AddMovieForm(props) {
     <div className={styles.container}>
       <section className={styles.addMovie}>
         <div className={styles.addMovie__left}>
-          <img
+          <Image
             className={styles.addMovie__image}
             src={input.imgUrl.value}
             alt=""
@@ -149,17 +153,17 @@ function AddMovieForm(props) {
           <h4 className={styles.addMovie__title}>Add New Movie</h4>
           <form className={styles.addMovie__forms} onSubmit={handleSubmit}>
             <div className={styles.addMovie__forms__group}>
-              <label className={styles.addMovie__forms__label}>Title</label>
-              <input type="text" name="title" className={styles.addMovie__forms__input} value={title.value} onChange={hdlChange} />
+              <Label>Title</Label>
+              <Input type="text" name="title" className={styles.addMovie__forms__input} value={title.value} onChange={hdlChange} />
               {input.title.isError && <Alert>Title Wajib Diisi</Alert>}
             </div>
             <div className={styles.addMovie__forms__group}>
-              <label className={styles.addMovie__forms__label}>Date</label>
-              <input type="number" name="date" className={styles.addMovie__forms__input} min="1900" max="2039" value={date.value} onChange={hdlChange} />
+              <Label>Date</Label>
+              <Input type="number" name="date" className={styles.addMovie__forms__input} min="1900" max="2039" value={date.value} onChange={hdlChange} />
               {input.date.isError && <Alert>Date Wajib Diisi</Alert>}
             </div>
             <div className={styles.addMovie__forms__group}>
-              <label className={styles.addMovie__forms__label}>Genre</label>
+              <Label>Genre</Label>
               <select name="genre" className={`${styles.addMovie__forms__input} ${styles.addMovie__forms__select}`} value={genre.value} onChange={hdlChange}>
                 {
                   genres.map((genre) => {
@@ -170,12 +174,13 @@ function AddMovieForm(props) {
               {input.date.isError && <Alert>Genre Movienya Apa ?</Alert>}
             </div>
             <div className={styles.addMovie__forms__group}>
-              <label className={styles.addMovie__forms__label}>Preview Image (URL)</label>
-              <input type="text" name="imgUrl" className={styles.addMovie__forms__input} value={(imgUrl.value.indexOf('no-image-available.png') > -1) ? "" : input.imgUrl.value} onChange={hdlChange} />
+              <Label>Preview Image (URL)</Label>
+              <Input type="text" name="imgUrl" className={styles.addMovie__forms__input} value={(imgUrl.value.indexOf('no-image-available.png') > -1) ? "" : input.imgUrl.value} onChange={hdlChange} />
               {input.imgUrl.isError && <Alert>Kok Gaada Preview Imagenya ?</Alert>}
             </div>
             <div className={styles.addMovie__forms__group}>
-              <button type="submit" className={styles.addMovie__forms__button}>Submit</button>
+              {/* <button type="submit" className={styles.addMovie__forms__button}>Submit</button> */}
+              <Button variant="secondary">Submit</Button>
             </div>
           </form>
         </div>

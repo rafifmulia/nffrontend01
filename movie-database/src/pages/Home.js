@@ -1,6 +1,6 @@
-import Hero from "../components/Hero/Hero";
-import Movies from "../components/Movies/Movies";
-import AddMovieForm from "../components/AddMovieForm/AddMovieForm";
+import Hero from "../components/Hero";
+import Movies from "../components/Movies";
+import AddMovieForm from "../components/AddMovieForm";
 import useMoviesHook from '../utils/hooks/movies';
 import data from '../utils/constants/data';
 
@@ -10,7 +10,7 @@ function Home() {
   return (
     <div>
       <Hero />
-      <Movies movies={movies} />
+      <Movies title="Latest Movies" movies={movies} />
       <AddMovieForm movies={movies} setMovies={setMovies} />
     </div>
   )

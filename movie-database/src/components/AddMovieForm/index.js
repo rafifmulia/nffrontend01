@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { nanoid } from 'nanoid';
-import Alert from "../Alert/Alert";
+import Alert from "../Alert";
 import styles from './AddMovieForm.module.css';
 import genres from '../../utils/constants/genres';
 import Button from '../ui/Button';

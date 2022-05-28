@@ -7,7 +7,7 @@ function Navbar() {
       <nav>
         <div>
           <div>
-            <i class="fa fa-bars"></i>
+            <i className="fa fa-bars"></i>
           </div>
           <h1>Movie App</h1>
         </div>

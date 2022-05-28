@@ -1,8 +1,10 @@
+import PopularMovieComponent from '../../components/PopularMovie';
+
 function PopularMovie() {
   return (
-    <>
-      <h2>Popular Movie</h2>
-    </>
+    <div>
+      <PopularMovieComponent />
+    </div>
   )
 }
 

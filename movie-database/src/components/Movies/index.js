@@ -1,18 +1,19 @@
-import Movie from '../Movie/Movie';
+import Movie from '../Movie';
 import styles from './Movies.module.css';
+import StyledMovie from './Movies.styled';
 
 function Movies(props) {
   const movies = props.movies;
 
   return (
-    <div className={styles.container}>
-      <section className={styles.movies}>
-        <h2 className={styles.movies__title}>Lates Movies</h2>
+    <StyledMovie>
+      <section>
+        <h2>{ props.title || 'Latest Movie' }</h2>
         <div className={styles.movie__container}>
           {movies.map((movie) => <Movie key={movie.id} movie={movie} />)}
         </div>
       </section>
-    </div>
+    </StyledMovie>
   )
 }
 

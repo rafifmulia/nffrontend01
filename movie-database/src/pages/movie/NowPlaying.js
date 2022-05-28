@@ -1,9 +1,11 @@
-function NowPlayingMovie() {
+import NowPlayingMovie from "../../components/NowPlayingMovie";
+
+function NowPlaying() {
   return (
-    <>
-      <h2>Now Playing Movie</h2>
-    </>
+    <div>
+      <NowPlayingMovie />
+    </div>
   )
 }
 
-export default NowPlayingMovie;
+export default NowPlaying;

@@ -6,7 +6,7 @@ const StyledHero = styled.div`
 
   section {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     text-align: center;
   }
 

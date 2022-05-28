@@ -4,7 +4,7 @@ import StyledHero from './Hero.styled';
 import Button from '../ui/Button';
 import Image from '../ui/Image';
 
-function Hero() {
+function Hero(props) {
   const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
   const IMG_PATH = process.env.REACT_APP_TMDB_IMAGE;
   
@@ -28,14 +28,19 @@ function Hero() {
     const response = await axios(URL);
     return response.data;
   }
-  function getTrendingMovie() {
-    (async () => {
-      const trendingMovies = await getTrendingMovies();
-      const detailMovie = await getDetailMovie(trendingMovies[0].id);
-      setMovie(detailMovie);
-    })();
+  async function getTrendingMovie() {
+    const trendingMovies = await getTrendingMovies();
+    const detailMovie = await getDetailMovie(trendingMovies[0].id);
+    setMovie(detailMovie);
   }
-  useEffect(getTrendingMovie, []);
+  function initData() {
+    if (props.movie) {
+      setMovie(props.movie);
+      return;
+    }
+    getTrendingMovie();
+  }
+  useEffect(initData, []);
 
   return (
     <StyledHero>
@@ -44,7 +49,7 @@ function Hero() {
           <h2>{movie.Title || movie.title}</h2>
           <h3>Genre: {genres}</h3>
           <p>{movie.Plot || movie.overview}</p>
-          <Button variant="primary" full as="a" href={trailerUrl} target="_blank">Watch</Button>
+          <Button variant="primary" as="a" href={trailerUrl} target="_blank">Watch</Button>
         </div>
         <div>
           <Image

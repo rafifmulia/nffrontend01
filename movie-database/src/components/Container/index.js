@@ -1,10 +1,10 @@
-import styles from './index.module.css';
+import StyledContainer from './Container.styled';
 
 function Container(props) {
   return (
-    <div className={styles.container}>
+    <StyledContainer>
       {props.children}
-    </div>
+    </StyledContainer>
   )
 }
 

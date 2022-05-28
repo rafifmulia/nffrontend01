@@ -15,19 +15,8 @@ h2 {
   color: #4361ee;
 }
 
-.movie__container {
-  display: flex;
-  flex-direction: column;
-}
-
 /* Medium Screen */
 @media (min-width: 768px) {
-  .movie__container {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-  }
 }
 
 /* Large Screen */

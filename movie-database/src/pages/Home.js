@@ -10,7 +10,7 @@ function Home() {
   return (
     <div>
       <Hero />
-      <Movies title="Latest Movies" movies={movies} />
+      <Movies title="Local Movies" movies={movies} />
       <AddMovieForm movies={movies} setMovies={setMovies} />
     </div>
   )

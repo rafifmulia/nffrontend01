@@ -1,9 +1,11 @@
-function TopRatedMovie() {
+import TopRatedMovie from "../../components/TopRatedMovie";
+
+function TopRated() {
   return (
-    <>
-      <h2>Top Rated Movie</h2>
-    </>
+    <div>
+      <TopRatedMovie />
+    </div>
   )
 }
 
-export default TopRatedMovie;
+export default TopRated;

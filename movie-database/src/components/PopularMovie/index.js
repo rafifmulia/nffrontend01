@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Hero from '../Hero';
 import Movies from '../Movies';
+import ENDPOINTS from '../../utils/constants/endpoints';
 
 function PopularMovie() {
-  const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
-  const URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`;
+  const URL = ENDPOINTS.POPULAR;
 
   const [movies, setMovies] = useState([]);
 

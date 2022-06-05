@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Hero from '../Hero';
 import Movies from '../Movies';
+import ENDPOINTS from '../../utils/constants/endpoints';
 
 function TopRatedMovies() {
-  const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
   const [movie, setMovie] = useState('');
   const [movies, setMovies] = useState('');
 
@@ -15,12 +15,12 @@ function TopRatedMovies() {
     setMovie(detailMovie);
   }
   async function getTopRatedMovies() {
-    const URL = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}`;
+    const URL = ENDPOINTS.TOP_RATED;
     const response = await axios(URL);
     return response.data.results;
   }
   async function getDetailMovie(id) {
-    const URL = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`;
+    const URL = ENDPOINTS.DETAIL(id);
     const response = await axios(URL);
     return response.data;
   }
@@ -29,7 +29,7 @@ function TopRatedMovies() {
   return (
     <>
       {movie && <Hero movie={movie} />}
-      {movies && <Movies movies={movies} />}
+      {movies && <Movies movies={movies} title="Top Rated Movies" />}
     </>
   );
 }

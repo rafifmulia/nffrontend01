@@ -3,10 +3,10 @@ import axios from 'axios';
 import StyledHero from './Hero.styled';
 import Button from '../ui/Button';
 import Image from '../ui/Image';
+import ENDPOINTS from '../../utils/constants/endpoints';
 
 function Hero(props) {
-  const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
-  const IMG_PATH = process.env.REACT_APP_TMDB_IMAGE;
+  const IMG_PATH = ENDPOINTS.IMG_PATH;
   
   const [movie, setMovie] = useState('');
   const genres = (() => {
@@ -19,12 +19,12 @@ function Hero(props) {
 
   // effect with initial data (mounting only)
   async function getTrendingMovies() {
-    const URL = `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}&append_to_response=videos`;
+    const URL = ENDPOINTS.TRENDING;
     const response = await axios(URL);
     return response.data.results;
   }
   async function getDetailMovie(id) {
-    const URL = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`;
+    const URL = ENDPOINTS.DETAIL(id);
     const response = await axios(URL);
     return response.data;
   }
@@ -43,7 +43,7 @@ function Hero(props) {
   useEffect(initData, []);
 
   return (
-    <StyledHero>
+    <StyledHero mainTextPos={props.mainTextPos || 'left'}>
       <section>
         <div>
           <h2>{movie.Title || movie.title}</h2>

@@ -11,12 +11,15 @@ section {
 
 h2 {
   margin-bottom: 1rem;
-  font-size: 2.44rem;
+  font-size: 1.84rem;
   color: #4361ee;
 }
 
 /* Medium Screen */
 @media (min-width: 768px) {
+  h2 {
+    font-size: 2.44rem;
+  }
 }
 
 /* Large Screen */

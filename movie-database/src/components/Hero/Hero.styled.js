@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledHero = styled.div`
   /* Small Screen */
@@ -12,6 +12,12 @@ const StyledHero = styled.div`
 
   div:nth-child(1) {
     margin-bottom: 1rem;
+    /* not works, why ?? */
+    ${(props) => {
+      css`
+        background-color: red;
+      `;
+    }}
   }
 
   h2 {

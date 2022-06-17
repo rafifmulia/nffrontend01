@@ -1,18 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import { updateMovie } from "../../features/moviesSlice";
+import { updateMovie as updateMovieHero } from '../../features/heroMovieSlice';
 import Hero from '../Hero';
 import Movies from '../Movies';
 import ENDPOINTS from '../../utils/constants/endpoints';
 
 function NowPlayingMovie() {
-  const [movie, setMovie] = useState('');
-  const [movies, setMovies] = useState('');
+
+  const dispatch = useDispatch();
 
   async function initData() {
     const playingMovies = await getPlayingMovies();
-    setMovies(playingMovies);
+    // contoh penggunaan tanpa action(reducers)
+    // dispatch({ type: 'movies/imdb', payload: playingMovies });
+    // contoh penggunaan dengan action(reducers)
+    dispatch(updateMovie(playingMovies));
     const detailMovie = await getDetailMovie(playingMovies[0].id);
-    setMovie(detailMovie);
+    dispatch(updateMovieHero(detailMovie));
   }
   async function getPlayingMovies() {
     const URL = ENDPOINTS.NOW_PLAYINGS;
@@ -24,12 +30,12 @@ function NowPlayingMovie() {
     const response = await axios(URL);
     return response.data;
   }
-  useEffect(initData, []);
+  useEffect(() => initData(), []);
 
   return (
     <>
-      {movie && <Hero movie={movie} />}
-      {movies && <Movies movies={movies} title="Now Playing Movies" />}
+      <Hero />
+      <Movies title="Now Playing Movies" />
     </>
   );
 }

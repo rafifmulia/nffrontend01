@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
+import { useNavigate } from 'react-router-dom';
+import { addMovie } from "../../features/moviesSlice";
 import Alert from "../Alert";
 import styles from './AddMovieForm.module.css';
 import StyledAddMovieForm from "./AddMovieForm.styled";
@@ -10,8 +13,7 @@ import Input from '../ui/Input';
 import Image from '../ui/Image';
 import FormGroup from "../ui/FormGroup";
 
-function AddMovieForm(props) {
-  const { movies, setMovies } = props;
+function AddMovieForm() {
   const defaultImg = "https://www.staticwhich.co.uk/static/images/products/no-image/no-image-available.png";
   const [input, setInput] = useState({
     title: {
@@ -32,8 +34,13 @@ function AddMovieForm(props) {
     },
   });
   const [count, setCount] = useState(0);
-
   const { title, date, genre, imgUrl } = input;
+
+  // redirecting
+  const navigation = useNavigate();
+
+  // react redux
+  const dispatch = useDispatch();
 
   /**
    * render(state) dulu baru useEffect(mounting / updating)
@@ -111,7 +118,7 @@ function AddMovieForm(props) {
     return true;
   }
 
-  function addMovie() {
+  function submitMovie() {
     const movie = {
       id: nanoid(),
       title: input.title.value,
@@ -120,7 +127,8 @@ function AddMovieForm(props) {
       genre: input.genre.value,
       poster: input.imgUrl.value,
     };
-    setMovies([...movies, movie]);
+    dispatch(addMovie(movie));
+    navigation('/');
     return true;
   }
 
@@ -138,7 +146,7 @@ function AddMovieForm(props) {
 
   function handleSubmit(ev) {
     ev.preventDefault();
-    validate() && addMovie() && resetAddMovieForm();
+    validate() && submitMovie() && resetAddMovieForm();
   }
 
   return (

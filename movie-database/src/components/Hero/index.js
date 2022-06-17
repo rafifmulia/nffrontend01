@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+import { updateMovie } from '../../features/heroMovieSlice';
 import StyledHero from './Hero.styled';
 import Button from '../ui/Button';
 import Image from '../ui/Image';
@@ -7,11 +9,13 @@ import ENDPOINTS from '../../utils/constants/endpoints';
 
 function Hero(props) {
   const IMG_PATH = ENDPOINTS.IMG_PATH;
+
+  const movie = useSelector((store) => store.heroMovie.movie);
+  const dispatch = useDispatch();
   
-  const [movie, setMovie] = useState('');
   const genres = (() => {
     // return movie.Genre || (movie && movie.genres.reduce((prev, crnt) => prev + crnt.name + ',', '').slice(0, -1));
-    return movie.Genre || (movie && movie.genres.map((genres) => genres.name).join(', '));
+    return movie.Genre || movie.genre || (movie && movie.genres.map((genres) => genres.name).join(', '));
   })();
   const trailerUrl = (() => {
     return movie && movie.videos && `https://www.youtube.com/watch?v=${movie.videos.results[0].key}`;
@@ -31,13 +35,9 @@ function Hero(props) {
   async function getTrendingMovie() {
     const trendingMovies = await getTrendingMovies();
     const detailMovie = await getDetailMovie(trendingMovies[0].id);
-    setMovie(detailMovie);
+    dispatch(updateMovie(detailMovie));
   }
   function initData() {
-    if (props.movie) {
-      setMovie(props.movie);
-      return;
-    }
     getTrendingMovie();
   }
   useEffect(initData, []);

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { updateMovie } from "../../features/moviesSlice";
 import StyledDetailMovie from './DetailMovie.styled';
 import Button from '../ui/Button';
 // import Hero from '../Hero';
@@ -9,8 +11,9 @@ import ENDPOINTS from '../../utils/constants/endpoints';
 
 function DetailMovie() {
   const [movie, setMovie] = useState('');
-  const [movies, setMovies] = useState('');
   const { id: movieId } = useParams();
+
+  const dispatch = useDispatch();
 
   const genres = (() => {
     // return movie.Genre || (movie && movie.genres.reduce((prev, crnt) => prev + crnt.name + ',', '').slice(0, -1));
@@ -24,7 +27,7 @@ function DetailMovie() {
     const detailMovie = await getDetailMovie(movieId);
     setMovie(detailMovie);
     const recommendMovies = await getRecommendMovies(movieId);
-    setMovies(recommendMovies);
+    dispatch(updateMovie(recommendMovies));
   }
   async function getRecommendMovies(id) {
     const URL = ENDPOINTS.RECOMMENDATION(id);
@@ -36,7 +39,9 @@ function DetailMovie() {
     const response = await axios(URL);
     return response.data;
   }
-  useEffect(initData, [movieId]);
+  useEffect(() => {
+    initData();
+  }, [movieId]);
 
   return (
     <>
@@ -56,7 +61,7 @@ function DetailMovie() {
           </Button>
         </div>
       </StyledDetailMovie>
-      {movies && <Movies movies={movies} title="Recommendations" />}
+      <Movies title="Recommendations" />
     </>
   );
 }

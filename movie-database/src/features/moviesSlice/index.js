@@ -16,7 +16,9 @@ const moviesSlice = createSlice({
       // update all movies
       state.movies = action.payload;
     },
-    deleteMovie() { console.log('gabisa di console') },
+    deleteMovie() {
+      // console.log('gabisa di console')
+    },
   }
 });
 

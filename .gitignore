@@ -6,3 +6,5 @@ docker-compose.*
 Dockerfile
 Dockerfile.*
 app.*
+!test/app.*
+!src/app.*
